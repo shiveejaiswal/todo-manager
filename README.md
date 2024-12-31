@@ -38,7 +38,7 @@ A modern, responsive task management application built with React, Redux Toolkit
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/todo-manager.git
+git clone https://github.com/shiveejaiswal/todo-manager
 
 ```
 
@@ -156,3 +156,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Your Name - [shiveejaiswal25@gmail.com](mailto:shiveejaiswal25@gmail.com)
 
 Project Link: [https://github.com/shiveejaiswal/todo-manager](https://github.com/shiveejaiswal/todo-manager)
+Hosted Link: [https://todo-manager-shivee.vercel.app/](https://todo-manager-shivee.vercel.app/)
