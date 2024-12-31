@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+```markdown project="Todo-Manager" file="README.md"
+...
+```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+2. Navigate to the project directory:
 
-## Available Scripts
+```shellscript
+cd todo-manager
+```
 
-In the project directory, you can run:
+3. Install dependencies:
 
-### `npm start`
+```shellscript
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+4. Start the development server:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```shellscript
+npm start
+```
 
-### `npm test`
+5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🏗️ Project Structure
 
-### `npm run build`
+```plaintext
+src/
+│
+├── components/
+│   ├── Header.js          # Navigation and app header
+│   ├── TaskList.js        # Displays list of tasks
+│   ├── TaskForm.js        # Form for creating/editing tasks
+│   ├── TaskItem.js        # Individual task component
+│   └── SearchBar.js       # Search functionality
+│
+├── features/
+│   └── tasks/
+│       ├── taskSlice.js   # Redux state management
+│       └── taskAPI.js     # API and localStorage handling
+│
+├── pages/
+│   ├── HomePage.js        # Main task listing page
+│   ├── AddTaskPage.js     # Add new task page
+│   └── EditTaskPage.js    # Edit existing task page
+│
+├── App.js                 # Main app component
+├── index.js              # Entry point
+└── store.js             # Redux store configuration
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 💾 Data Persistence
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The application uses a hybrid approach for data management:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Fetches initial data from JSONPlaceholder API
+2. Stores all data in localStorage for persistence
+3. Maintains state using Redux Toolkit
+4. Handles offline functionality with fallback mechanisms
 
-### `npm run eject`
+## 🎨 Customization
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Styling
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application uses Tailwind CSS for styling. You can customize the look and feel by modifying:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- `tailwind.config.js` for theme configuration
+- `index.css` for global styles and dark mode variables
+- Individual component styles using Tailwind classes
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Colors
 
-## Learn More
+The default color scheme can be modified in the `index.css` file under the `:root` and `.dark` selectors.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🔧 Development
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Available Scripts
 
-### Code Splitting
+- `npm start` - Runs the app in development mode
+- `npm test` - Launches the test runner
+- `npm run build` - Builds the app for production
+- `npm run eject` - Ejects from Create React App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Best Practices
 
-### Analyzing the Bundle Size
+- Follow the existing code structure and naming conventions
+- Use meaningful component and variable names
+- Write comments for complex logic
+- Maintain proper error handling
+- Keep components small and focused
+- Use TypeScript for better type safety
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🤝 Contributing
 
-### Making a Progressive Web App
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📝 License
 
-### Advanced Configuration
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🙏 Acknowledgments
 
-### Deployment
+- [Tailwind CSS](https://tailwindcss.com)
+- [Framer Motion](https://www.framer.com/motion)
+- [Redux Toolkit](https://redux-toolkit.js.org)
+- [React Router](https://reactrouter.com)
+- [Lucide Icons](https://lucide.dev)
+- [JSONPlaceholder](https://jsonplaceholder.typicode.com)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📧 Contact
 
-### `npm run build` fails to minify
+Your Name - [your.email@example.com](mailto:shiveejaiswal25@gmail.com)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project Link: [https://github.com/shiveejaiswal/todo-manager](https://github.com/shiveejaiswal/todo-manager)

@@ -1,3 +1,4 @@
+/* index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -60,7 +61,6 @@
   }
 }
 
-/* Custom animations */
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -79,7 +79,6 @@
   animation: float 3s ease-in-out infinite;
 }
 
-/* Smooth transitions for dark mode */
 .dark * {
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
