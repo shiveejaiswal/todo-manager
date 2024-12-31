@@ -1,5 +1,45 @@
-```markdown project="Todo-Manager" file="README.md"
-...
+# Todo-Manager
+
+A modern, responsive task management application built with React, Redux Toolkit, and Framer Motion. Features a beautiful UI with smooth animations, dark mode support, and real-time task filtering.
+
+![Todo-Manager Screenshot](screenshot.png)
+
+## 🌟 Features
+
+- ✨ Modern and responsive UI with smooth animations
+- 🌓 Dark mode support with system preference detection
+- 🔍 Real-time task search and filtering
+- ✅ Task completion tracking
+- ✏️ Edit existing tasks
+- 🗑️ Delete tasks
+- 📱 Mobile-friendly design
+- 💾 Local storage persistence
+- 🔄 API integration with fallback support
+
+## 🛠️ Technologies Used
+
+- React.js
+- Redux Toolkit for state management
+- React Router for navigation
+- Framer Motion for animations
+- Tailwind CSS for styling
+- Lucide React for icons
+- React Hot Toast for notifications
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (version 14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/todo-manager.git
+
 ```
 
 2. Navigate to the project directory:
