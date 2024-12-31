@@ -1,36 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as taskAPI from './taskAPI';
 
-// Create async thunks
 export const fetchTasks = createAsyncThunk(
   'tasks/fetchTasks',
   async () => {
-    const response = await taskAPI.fetchTasksFromAPI();
-    return response;
+    return await taskAPI.fetchTasksFromAPI();
   }
 );
 
 export const createTask = createAsyncThunk(
   'tasks/createTask',
   async (task) => {
-    const response = await taskAPI.createTaskAPI(task);
-    return response;
+    return await taskAPI.createTaskAPI(task);
   }
 );
 
 export const updateTask = createAsyncThunk(
   'tasks/updateTask',
   async (task) => {
-    const response = await taskAPI.updateTaskAPI(task);
-    return response;
+    await taskAPI.updateTaskAPI(task);
+    return task; // Return the original task as JSONPlaceholder doesn't actually update
   }
 );
 
 export const removeTask = createAsyncThunk(
   'tasks/deleteTask',
   async (id) => {
-    const response = await taskAPI.deleteTaskAPI(id);
-    return response;
+    await taskAPI.deleteTaskAPI(id);
+    return id;
   }
 );
 
@@ -73,3 +70,4 @@ const taskSlice = createSlice({
 });
 
 export default taskSlice.reducer;
+

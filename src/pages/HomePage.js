@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchTasks, removeTask, updateTask } from "../features/tasks/taskSlice";
 import TaskItem from "../components/TaskItem";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2 } from 'lucide-react';
+import { Loader2, ListTodo } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
-const HomePage = () => {
+const HomePage = ({ searchQuery }) => {
   const dispatch = useDispatch();
   const { tasks, status, error } = useSelector((state) => state.tasks);
 
@@ -18,63 +19,117 @@ const HomePage = () => {
   const handleDelete = async (id) => {
     try {
       await dispatch(removeTask(id)).unwrap();
+      toast.success('Task deleted successfully', {
+        icon: '🗑️',
+        duration: 2000,
+      });
     } catch (err) {
       console.error('Failed to delete task:', err);
+      toast.error('Failed to delete task');
     }
   };
 
-  const handleToggleComplete = async (id) => {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-      try {
-        await dispatch(updateTask({
-          ...task,
-          completed: !task.completed
-        })).unwrap();
-      } catch (err) {
-        console.error('Failed to update task:', err);
-      }
+  const handleToggleComplete = async (task) => {
+    try {
+      const updatedTask = {
+        ...task,
+        completed: !task.completed
+      };
+      await dispatch(updateTask(updatedTask)).unwrap();
+      toast.success(updatedTask.completed ? '✅ Task completed!' : '↩️ Task reopened', {
+        duration: 2000,
+      });
+    } catch (err) {
+      console.error('Failed to update task:', err);
+      toast.error('Failed to update task status');
     }
   };
+
+  const filteredTasks = tasks.filter(task => 
+    task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    task.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (status === 'loading') {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        >
+          <Loader2 className="h-8 w-8 text-primary" />
+        </motion.div>
       </div>
     );
   }
 
   if (status === 'failed') {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <motion.div 
+        className="flex items-center justify-center min-h-[400px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         <p className="text-destructive">Error: {error}</p>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="container py-8 space-y-8">
+    <motion.div 
+      className="container py-8 space-y-8"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Your Tasks</h2>
-        <div className="text-sm text-muted-foreground">
-          {tasks.length} task{tasks.length !== 1 && 's'}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center gap-3"
+        >
+          <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary/80 to-primary bg-clip-text text-transparent">
+            Your Tasks
+          </h2>
+          <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary">
+            <ListTodo className="h-4 w-4" />
+          </div>
+        </motion.div>
+        <motion.div 
+          className="text-sm text-muted-foreground px-3 py-1 rounded-md bg-muted"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {filteredTasks.length} task{filteredTasks.length !== 1 && 's'}
+        </motion.div>
       </div>
       
-      {tasks.length === 0 ? (
+      {filteredTasks.length === 0 ? (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
           className="flex flex-col items-center justify-center min-h-[400px] space-y-4"
         >
-          <p className="text-muted-foreground text-lg">No tasks available.</p>
-          <p className="text-sm text-muted-foreground">Add a new task to get started!</p>
+          <div className="rounded-full bg-muted p-4">
+            <ListTodo className="h-8 w-8 text-muted-foreground" />
+          </div>
+          <p className="text-muted-foreground text-lg">
+            {searchQuery ? 'No tasks found matching your search.' : 'No tasks available.'}
+          </p>
+          {!searchQuery && (
+            <p className="text-sm text-muted-foreground">Add a new task to get started!</p>
+          )}
         </motion.div>
       ) : (
         <AnimatePresence mode="popLayout">
-          <div className="grid gap-4">
-            {tasks.map((task) => (
+          <motion.div 
+            className="grid gap-4"
+            layout
+          >
+            {filteredTasks.map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}
@@ -82,10 +137,10 @@ const HomePage = () => {
                 onToggleComplete={handleToggleComplete}
               />
             ))}
-          </div>
+          </motion.div>
         </AnimatePresence>
       )}
-    </div>
+    </motion.div>
   );
 };
 
