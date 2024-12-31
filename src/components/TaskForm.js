@@ -1,37 +1,31 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addTask } from '../features/tasks/taskSlice';
+// src/components/TaskForm.js
+import React, { useState } from "react";
 
-const TaskForm = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [status, setStatus] = useState(false);
-
-  const dispatch = useDispatch();
+const TaskForm = ({ onSubmit, initialTitle = "", initialDescription = "" }) => {
+  const [title, setTitle] = useState(initialTitle);
+  const [description, setDescription] = useState(initialDescription);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTask({ title, description, completed: status }));
+    if (title && description) {
+      onSubmit(title, description);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="task-form">
-      <div>
-        <label>Title</label>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-      </div>
-      <div>
-        <label>Description</label>
-        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
-      </div>
-      <div>
-        <label>Status</label>
-        <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value={false}>Pending</option>
-          <option value={true}>Completed</option>
-        </select>
-      </div>
-      <button type="submit">Submit</button>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Task Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea
+        placeholder="Task Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <button type="submit">Save Task</button>
     </form>
   );
 };

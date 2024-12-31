@@ -1,21 +1,42 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { updateTask } from '../features/tasks/taskSlice';
-import { useParams } from 'react-router-dom';
+// src/pages/EditTaskPage.js
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editTask } from "../features/tasks/taskSlice";
+import { useParams, useNavigate } from "react-router-dom";
 
 const EditTaskPage = () => {
   const { id } = useParams();
+  const task = useSelector((state) =>
+    state.tasks.tasks.find((task) => task.id === id)
+  );
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleUpdate = (status) => {
-    dispatch(updateTask({ id, status }));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(editTask({ id, title, description, completed: task.completed }));
+    navigate("/");
   };
 
   return (
     <div>
-      <h2>Edit Task Status</h2>
-      <button onClick={() => handleUpdate(true)}>Mark as Completed</button>
-      <button onClick={() => handleUpdate(false)}>Mark as Pending</button>
+      <h2>Edit Task</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+        <button type="submit">Save Changes</button>
+      </form>
     </div>
   );
 };

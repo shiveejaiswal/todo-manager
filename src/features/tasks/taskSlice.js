@@ -1,47 +1,31 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// src/features/tasks/taskSlice.js
+import { createSlice } from "@reduxjs/toolkit";
 
-// API URL
-const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
-
-// Async thunk for fetching tasks
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const response = await axios.get(apiUrl);
-  return response.data.slice(0, 10); // Fetch only 10 tasks for brevity
-});
+const initialState = {
+  tasks: [],
+};
 
 const taskSlice = createSlice({
-  name: 'tasks',
-  initialState: {
-    tasks: [],
-    status: 'idle',
-  },
+  name: "tasks",
+  initialState,
   reducers: {
     addTask: (state, action) => {
       state.tasks.push(action.payload);
     },
-    updateTask: (state, action) => {
-      const { id, status } = action.payload;
+    editTask: (state, action) => {
+      const { id, title, description, completed } = action.payload;
       const task = state.tasks.find((task) => task.id === id);
       if (task) {
-        task.completed = status;
+        task.title = title;
+        task.description = description;
+        task.completed = completed;
       }
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchTasks.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchTasks.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.tasks = action.payload;
-      })
-      .addCase(fetchTasks.rejected, (state) => {
-        state.status = 'failed';
-      });
+    deleteTask: (state, action) => {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    },
   },
 });
 
-export const { addTask, updateTask } = taskSlice.actions;
+export const { addTask, editTask, deleteTask } = taskSlice.actions;
 export default taskSlice.reducer;

@@ -1,12 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+// src/components/TaskItem.js
+import React from "react";
+import { Link } from "react-router-dom";
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ task, onDelete }) => {
   return (
-    <div className={`task-item ${task.completed ? 'completed' : ''}`}>
-      <h2>{task.title}</h2>
-      <p>{task.completed ? 'Completed' : 'Pending'}</p>
-      <Link to={`/edit-task/${task.id}`}>Edit</Link>
+    <div className="task-item">
+      <h3>{task.title}</h3>
+      <p>{task.description}</p>
+      <div className="task-actions">
+        <Link to={`/edit-task/${task.id}`}>
+          <button>Edit</button>
+        </Link>
+        <button onClick={() => onDelete(task.id)}>Delete</button>
+      </div>
     </div>
   );
 };

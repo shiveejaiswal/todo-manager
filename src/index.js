@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// src/index.js
+import React from "react";
+import ReactDOM from "react-dom/client"; // Use this for React 18
+import { Provider } from "react-redux";
+import { store } from "./store";
+import App from "./App";
+import "./App.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// Create the root element
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// Render the app using createRoot
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
