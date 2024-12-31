@@ -1,42 +1,61 @@
-// src/pages/EditTaskPage.js
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editTask } from "../features/tasks/taskSlice";
+import { updateTask } from "../features/tasks/taskSlice";
 import { useParams, useNavigate } from "react-router-dom";
+import TaskForm from "../components/TaskForm";
+import { toast } from "react-hot-toast";
+import { Loader2 } from 'lucide-react';
 
 const EditTaskPage = () => {
   const { id } = useParams();
-  const task = useSelector((state) =>
-    state.tasks.tasks.find((task) => task.id === id)
-  );
-  const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const { tasks, status } = useSelector((state) => state.tasks);
+  const task = tasks.find((t) => t.id === id);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(editTask({ id, title, description, completed: task.completed }));
-    navigate("/");
+  const handleSubmit = async (title, description) => {
+    if (!task) return;
+
+    try {
+      await dispatch(updateTask({
+        ...task,
+        title,
+        description,
+      })).unwrap();
+      toast.success('Task updated successfully!');
+      navigate("/");
+    } catch (err) {
+      toast.error('Failed to update task');
+      console.error('Failed to update task:', err);
+    }
   };
 
+  if (status === 'loading') {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!task) {
+    return (
+      <div className="container py-8">
+        <p className="text-destructive">Task not found</p>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <h2>Edit Task</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-        <button type="submit">Save Changes</button>
-      </form>
+    <div className="container max-w-2xl py-8 space-y-8">
+      <h2 className="text-3xl font-bold tracking-tight">Edit Task</h2>
+      <TaskForm
+        initialTitle={task.title}
+        initialDescription={task.description}
+        onSubmit={handleSubmit}
+        isEditing
+      />
     </div>
   );
 };
