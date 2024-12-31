@@ -153,6 +153,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-Your Name - [your.email@example.com](mailto:shiveejaiswal25@gmail.com)
+Your Name - [shiveejaiswal25@gmail.com](mailto:shiveejaiswal25@gmail.com)
 
 Project Link: [https://github.com/shiveejaiswal/todo-manager](https://github.com/shiveejaiswal/todo-manager)
